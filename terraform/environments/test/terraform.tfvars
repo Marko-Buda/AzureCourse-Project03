@@ -5,11 +5,15 @@ client_secret = "MhDaOzyxaH-y6DdmXl6gotPXm6TJ99AJsB"
 tenant_id = "f4f9dd01-f727-4b65-b9f7-9cd0f8d9db31"
 
 # Resource Group/Location
-location = ""
-resource_group = ""
-application_type = ""
+location = "East US 2"
+resource_group = "Course03_project"
+application_type = "myProjectDemo"
 
 # Network
 virtual_network_name = ""
 address_space = ["10.5.0.0/16"]
 address_prefix_test = "10.5.1.0/24"
+
+#Virtual machines
+size = "Standard_B1s"
+username = "admin"

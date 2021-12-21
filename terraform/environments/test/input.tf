@@ -14,3 +14,6 @@ variable virtual_network_name {}
 variable address_prefix_test {}
 variable address_space {}
 
+#Virtual Machines
+variable size {}
+variable "username" {}
