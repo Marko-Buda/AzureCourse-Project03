@@ -43,7 +43,7 @@ stages:
       displayName: Run Data Validation Tests
       continueOnError: true
       inputs:
-        script: 'newman run Starter_APIs_Data_Validation.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-data-validation.xml'
+        script: 'newman run Starter_APIs_Data_Validation.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull -x --reporter-junitfull-export JUnitReport-data-validation.xml'
         workingDirectory: 'automatedtesting/postman'
 
     - task: PublishTestResults@2
@@ -51,6 +51,7 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: 'JUnitReport*.xml'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
         mergeTestResults: true
         testRunTitle: 'Publish postman test result'
     - task: ArchiveFiles@2
