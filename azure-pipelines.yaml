@@ -6,7 +6,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Hosted Ubuntu 1804
+      name: Ubuntu-18.04
     steps:
     - task: TerraformInstaller@0
       displayName: Use Terraform 1.1.2
@@ -67,7 +67,7 @@ stages:
   jobs:
   - deployment: FakeRestAPI
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'Ubuntu-18.04'
     environment: 'TEST'
     strategy:
       runOnce:
