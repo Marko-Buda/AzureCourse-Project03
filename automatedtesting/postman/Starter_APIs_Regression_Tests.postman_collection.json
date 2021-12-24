@@ -12,12 +12,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"pm.test(\"Status message response\", function () {",
+							"    pm.expect(pm.response.text()).to.include.oneOf([\"success\", \"Too Many Requests\"]);",
 							"});",
 							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"pm.test(\"Status code response\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,429]);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -46,14 +46,14 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"pm.test(\"Status message response\", function () {",
+							"    pm.expect(pm.response.text()).to.include.oneOf([\"success\", \"Too Many Requests\"]);",
 							"});",
 							"var json = pm.response.json();",
 							"pm.environment.set(\"id\", json.data.id);",
 							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"pm.test(\"Status code response\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,429]);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -85,18 +85,27 @@
 			"response": []
 		},
 		{
+			"name": "Get Employee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
 			"name": "Update Employee",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"pm.test(\"Status message response\", function () {",
+							"    pm.expect(pm.response.text()).to.include.oneOf([\"success\", \"Too Many Requests\"]);",
 							"});",
 							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"pm.test(\"Status code response\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,429]);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -135,12 +144,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"pm.test(\"Status message response\", function () {",
+							"    pm.expect(pm.response.text()).to.include.oneOf([\"success\", \"Too Many Requests\"]);",
 							"});",
 							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"pm.test(\"Status code response\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,429]);",
 							"});"
 						],
 						"type": "text/javascript"

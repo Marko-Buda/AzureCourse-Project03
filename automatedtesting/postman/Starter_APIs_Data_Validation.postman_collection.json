@@ -90,6 +90,46 @@
 			"response": []
 		},
 		{
+			"name": "Get Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful fetch\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully! Record has been fetched.\");",
+							"});",
+							"",
+							"var id = parseInt(pm.variables.get(\"employee_id\"));",
+							"pm.test(\"Verify data of a Employee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.id).to.eql(id);",
+							"    pm.expect(jsonData.data.employee_name).to.eql(\"Michael Silva\");",
+							"    pm.expect(jsonData.data.employee_salary).to.eql(198500);",
+							"    pm.expect(jsonData.data.employee_age).to.eql(66);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/employee/{{employee_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Update Employee",
 			"event": [
 				{
