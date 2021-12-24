@@ -6,7 +6,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Hosted Ubuntu 1604
+      name: Hosted Ubuntu 1804
     steps:
     - task: TerraformInstaller@0
       displayName: Use Terraform 1.1.2
