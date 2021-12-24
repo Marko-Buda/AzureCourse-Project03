@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "5c9422a0-84c4-48bc-b864-28d0385a3f8d",
+		"name": "Starter_APIs_Data_Validation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful fetch\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"All records has been fetched.\");",
+							"});",
+							"",
+							"pm.test(\"Verify data of a Employee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data[0].id).to.eql(1);",
+							"    pm.expect(jsonData.data[0].employee_name).to.eql(\"Tiger Nixon\");",
+							"    pm.expect(jsonData.data[0].employee_salary).to.eql(320800);",
+							"    pm.expect(jsonData.data[0].employee_age).to.eql(61);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/employees",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful addition\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Record has been added.\");",
+							"});",
+							"",
+							"pm.test('Verification of Created Employee Data', function () {",
+							"    var json = pm.response.json();",
+							"    pm.expect(json.data.name).to.equal(pm.variables.get(\"name\"));",
+							"    pm.expect(json.data.salary).to.equal(pm.variables.get(\"salary\"));",
+							"    pm.expect(json.data.age).to.equal(pm.variables.get(\"age\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful update\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Record has been updated.\");",
+							"});",
+							"",
+							"pm.test(\"Verify Updated data of a Employee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.employee_salary).to.eql(pm.variables.get(\"update_salary\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"employee_salary\": \"{{update_salary}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/update/{{employee_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"update",
+						"{{employee_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful delete\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Record has been deleted\");",
+							"});",
+							"",
+							"pm.test(\"Verify Deleted data of a Employeee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.value).to.eql(undefined);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/delete/{{employee_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"delete",
+						"{{employee_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
