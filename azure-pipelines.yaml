@@ -8,6 +8,14 @@ stages:
     pool:
       name: Hosted Ubuntu 1604
     steps:
+    - task: TerraformInstaller@0
+      displayName: Use Terraform 1.1.2
+      inputs:
+        terraformVersion: 1.1.2
+    - task: TerraformCLI@0
+      displayName: 'check terraform version'
+      inputs:
+        command: version
     # Needed for Terraform VM deployment
     # - task: InstallSSHKey@0
     #   inputs:
