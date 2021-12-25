@@ -41,13 +41,17 @@ stages:
         command: init
         workingDirectory: terraform/environments/test
         backendType: selfConfigured
-
     - task:  TerraformCLI@0
       displayName: 'Plan Terraform'
       inputs:
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        # commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
+        environmentServiceName: 'last_project'
+    - task: TerraformCLI@0
+      displayName: 'Apply Terraform'
+      inputs:
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceName: 'last_project'
 
     - task: Bash@3
@@ -105,42 +109,67 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription: ''
-              appName: ''
+              azureSubscription: 'Azure subscription 1 (f02a9f7c-1737-4a80-911e-44f7e8c03f11)'
+              appName: 'myProjectDemo-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  # - deployment: VMDeploy
-  #   displayName: NAME
-  #   environment:
-  #     name:  ENVIRONMENT NAME
-  #     resourceType: VirtualMachine
-  #     tags: TAG NAME
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: Bash@3
-  #           inputs:
-  #             targetType: 'inline'
-  #             script: |
-  #               #! /bin/bash
-                
-  #               sudo apt-get upgrade -y
-  #               sudo apt-get install python3-pip -y
-  #               sudo apt-get install unzip -y
-  #               sudo apt-get install -y chromium-browser
-  #               pip3 install selenium
-  #               export PATH=$PATH:some/path
+  - deployment: VMDeploy
+    displayName: Deploy Virtual Machine 
+    environment:
+      name: Selenium_Environment
+      resourceType: VirtualMachine
 
-#- stage: Test
-#  jobs:
-#    - job: Performance_testing
-#      displayName: 'Run Jmeter test suites'
-#      pool:
-#        vmImage: ubuntu-latest
-#      steps:
-#        - task: JMeterInstaller@0
-#          displayName: 'Install JMeter 5.4.2'
-#          inputs:
-#            jmeterVersion: 5.4.2
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+               
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install selenium
+                export PATH=$PATH:some/path
+          - task: PythonScript@0
+            displayName: Run Selenium script
+            inputs:
+              scriptPath: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py'
 
+- stage: Test
+  jobs:
+    - job: Performance_testing
+      displayName: 'Run Jmeter test suites'
+      pool:
+        vmImage: Ubuntu-18.04
+      steps:
+        - task: JMeterInstaller@0
+          displayName: 'Install JMeter 5.4.2'
+          inputs:
+            jmeterVersion: 5.4.2
+        - task: Bash@3
+          displayName: 'Run JMeter Endurance tests'
+          inputs:
+            targetType: inline
+            script: |
+              jmeter -n -t automatedtesting/jmeter/Starter_Endurance.jmx -l endurance-results.jtl -e -f -o endurance-test-report
+        - task: publishhtmlreport@1
+          displayName: 'Publish Endurance Test Results'
+          inputs:
+            htmlType: 'Jmeter'
+            JmeterReportsPath: '$(Build.SourcesDirectory)/endurance-test-report'
+        - task: Bash@3
+          displayName: 'Run JMeter Stress tests'
+          inputs:
+            targetType: inline
+            script: |
+              jmeter -n -t automatedtesting/jmeter/Starter_Stress.jmx -l stress-results.jtl -e -f -o stress-test-report
+        - task: publishhtmlreport@1
+          displayName: 'Publish Stress Test Results'
+          inputs:
+            htmlType: 'Jmeter'
+            JmeterReportsPath: '$(Build.SourcesDirectory)/stress-test-report'
