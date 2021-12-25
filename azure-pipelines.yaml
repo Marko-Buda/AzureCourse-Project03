@@ -96,6 +96,18 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive SeleniumTest Artifact'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip
+      displayName: 'Upload SeleniumTest Artifact'
+      artifact: drop-selenium-test 
+
 - stage:
   jobs:
   - deployment: FakeRestAPI
@@ -123,6 +135,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: current
+            displayName: 'Download Selenium'
+            artifact: drop-selenium-test
           - task: Bash@3
             inputs:
               targetType: 'inline'
@@ -133,7 +148,9 @@ stages:
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
-                export PATH=$PATH:some/path
+                export PATH=$PATH:usr/lib/chromium-browser/
+                cd &(Pipeline.Workspace)/drop-selenium-test
+                unzip -o $(Pipeline.Workspace)/drop-selenium-test/$(Build.BuildId)-selenium-tests -d .
           - task: PythonScript@0
             displayName: Run Selenium script
             inputs:
