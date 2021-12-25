@@ -6,3 +6,7 @@ variable "vm_size" {}
 variable "username" {}
 variable "subnet_id" {}
 variable "public_ip_address_id" {}
+
+variable "tags" {
+  type = map(string)
+}

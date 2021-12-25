@@ -5,3 +5,7 @@ variable "resource_type" {}
 variable "resource_group" {}
 variable "subnet_id" {}
 variable "address_prefix_test" {}
+
+variable "tags" {
+  type = map(string)
+}

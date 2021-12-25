@@ -17,3 +17,9 @@ variable address_space {}
 #Virtual Machines
 variable size {}
 variable "username" {}
+
+locals {
+  tags = {
+      name = "course03_demo"
+  }
+}

@@ -4,3 +4,7 @@ variable "location" {}
 variable "application_type" {}
 variable "resource_type" {}
 variable "resource_group" {}
+
+variable "tags" {
+  type = map(string)
+}

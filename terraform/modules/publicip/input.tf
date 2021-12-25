@@ -4,3 +4,7 @@ variable "resource_group" {}
 
 variable "application_type" {}
 variable "resource_type" {}
+
+variable "tags" {
+  type = map(string)
+}

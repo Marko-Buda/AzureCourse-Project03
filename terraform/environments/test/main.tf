@@ -27,6 +27,7 @@ module "network" {
   resource_type        = "NET"
   resource_group       = "${module.resource_group.resource_group_name}"
   address_prefix_test  = "${var.address_prefix_test}"
+  tags             = "${local.tags}"
 }
 
 module "nsg-test" {
@@ -37,6 +38,7 @@ module "nsg-test" {
   resource_group   = "${module.resource_group.resource_group_name}"
   subnet_id        = "${module.network.subnet_id_test}"
   address_prefix_test = "${var.address_prefix_test}"
+  tags             = "${local.tags}"
 }
 module "appservice" {
   source           = "../../modules/appservice"
@@ -44,6 +46,7 @@ module "appservice" {
   application_type = "${var.application_type}"
   resource_type    = "AppService"
   resource_group   = "${module.resource_group.resource_group_name}"
+  tags             = "${local.tags}"
 }
 module "publicip" {
   source           = "../../modules/publicip"
@@ -51,6 +54,7 @@ module "publicip" {
   application_type = "${var.application_type}"
   resource_type    = "publicip"
   resource_group   = "${module.resource_group.resource_group_name}"
+  tags             = "${local.tags}"
 }
 module "vm" {
   source           = "../../modules/vm"
@@ -62,4 +66,5 @@ module "vm" {
   resource_type    = "VM"
   subnet_id        = "${module.network.subnet_id_test}"
   public_ip_address_id = "${module.publicip.public_ip_address_id}"
+  tags             = "${local.tags}"
 }

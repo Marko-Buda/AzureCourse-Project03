@@ -9,6 +9,7 @@ resource "azurerm_network_interface" "test" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = "${var.public_ip_address_id}"
   }
+  tags = "${var.tags}"
 }
 
 resource "azurerm_linux_virtual_machine" "test" {
@@ -32,4 +33,5 @@ resource "azurerm_linux_virtual_machine" "test" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
+  tags = "${var.tags}"
 }
