@@ -132,4 +132,15 @@ stages:
   #               pip3 install selenium
   #               export PATH=$PATH:some/path
 
+#- stage: Test
+#  jobs:
+#    - job: Performance_testing
+#      displayName: 'Run Jmeter test suites'
+#      pool:
+#        vmImage: ubuntu-latest
+#      steps:
+#        - task: JMeterInstaller@0
+#          displayName: 'Install JMeter 5.4.2'
+#          inputs:
+#            jmeterVersion: 5.4.2
 
