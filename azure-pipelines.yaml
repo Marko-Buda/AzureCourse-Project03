@@ -116,7 +116,7 @@ stages:
   - deployment: VMDeploy
     displayName: Deploy Virtual Machine 
     environment:
-      name: Selenium_Environment
+      name: selenium_deployment
       resourceType: VirtualMachine
 
     strategy:
