@@ -16,4 +16,4 @@ address_prefix_test = "10.5.1.0/24"
 
 #Virtual machines
 size = "Standard_B1s"
-username = "admin"
+username = "demo"
