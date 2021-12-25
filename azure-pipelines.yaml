@@ -50,8 +50,8 @@ stages:
       displayName: 'Publish integrations test'
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: 'JUnitReport*.xml'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
+        testResultsFiles: '**/JUnitReport*.xml'
+        searchFolder: 'automatedtesting/postman'
         mergeTestResults: true
         testRunTitle: 'Publish postman test result'
     - task: ArchiveFiles@2
