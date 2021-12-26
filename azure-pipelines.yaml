@@ -108,7 +108,7 @@ stages:
       displayName: 'Upload SeleniumTest Artifact'
       artifact: drop-selenium-test 
 
-- stage:
+- stage: Deploy
   jobs:
   - deployment: FakeRestAPI
     pool:
@@ -125,6 +125,36 @@ stages:
               appName: 'myProjectDemo-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+  - deployment: VMDeploy
+    displayName: Deploy Virtual Machine 
+    environment:
+      name: selenium_deployment
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            displayName: 'Download Selenium'
+            artifact: drop-selenium-test
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                sudo apt-get install -y chromium-chromedriver
+                pip3 install selenium
+                export PATH=$PATH:usr/lib/chromium-browser/
+                cd $(Pipeline.Workspace)/drop-selenium
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
+          - task: PythonScript@0
+            displayName: Run Selenium script
+            inputs:
+              scriptPath: '$(Pipeline.Workspace)/drop-selenium/login.py'
 
 - stage: Test
   jobs:
@@ -159,34 +189,3 @@ stages:
           inputs:
             htmlType: 'Jmeter'
             JmeterReportsPath: '$(Build.SourcesDirectory)/stress-test-report'
-
-    - deployment: VMDeploy
-      displayName: Deploy Virtual Machine 
-      environment:
-        name: selenium_deployment
-        resourceType: VirtualMachine
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - download: current
-              displayName: 'Download Selenium'
-              artifact: drop-selenium-test
-            - task: Bash@3
-              inputs:
-                targetType: 'inline'
-                script: |
-                  #! /bin/bash
-                  sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip -y
-                  sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
-                  sudo apt-get install -y chromium-chromedriver
-                  pip3 install selenium
-                  export PATH=$PATH:usr/lib/chromium-browser/
-                  cd $(Pipeline.Workspace)/drop-selenium
-                  unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
-            - task: PythonScript@0
-              displayName: Run Selenium script
-              inputs:
-                scriptPath: '$(Pipeline.Workspace)/drop-selenium/login.py'
