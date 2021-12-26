@@ -173,7 +173,8 @@ stages:
                 #! /bin/bash
                 sudo mkdir /home/demo/selenium_log
                 export PATH=$PATH:/usr/bin/chromedriver
-                python3 ../drop-seleniumtests/login.py >> /home/demo/selenium_log/selenium-report.txt
+                echo $(Pipeline.Workspace) >> /home/demo/selenium_log/workspace_path.txt
+                python3 $(Pipeline.Workspace)/drop-seleniumtests/login.py >> /home/demo/selenium_log/selenium-report.txt
                 sudo cp selenium-report.txt /var/log/selenium-report.txt
 
 - stage: Test
