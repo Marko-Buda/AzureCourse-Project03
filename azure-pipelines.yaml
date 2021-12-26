@@ -97,16 +97,19 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive SeleniumTest Artifact'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip
-      displayName: 'Upload SeleniumTest Artifact'
-      artifact: drop-selenium-test 
+#    - task: ArchiveFiles@2
+#      displayName: 'Archive SeleniumTest Artifact'
+#      inputs:
+#        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py'
+#        includeRootFolder: false
+#        archiveType: 'zip'
+#        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip'
+#    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-SeleniumTest.zip
+#      displayName: 'Upload SeleniumTest Artifact'
+#      artifact: drop-selenium-test 
+    - publish: automatedtesting/selenium/login.py
+      displayName: 'Upload Selenium Test definition'
+      artifact: drop-seleniumtests
 
 - stage: Deploy
   jobs:
@@ -136,25 +139,42 @@ stages:
           steps:
           - download: current
             displayName: 'Download Selenium'
-            artifact: drop-selenium-test
+            artifact: drop-seleniumtests
           - task: Bash@3
+            displayName: Install Selenium dependencies
             inputs:
               targetType: 'inline'
               script: |
                 #! /bin/bash
+                sudo apt-get update
                 sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
+                sudo apt-get install python3-pip unzip expect -y
                 sudo apt-get install -y chromium-browser
-                sudo apt-get install -y chromium-chromedriver
                 pip3 install selenium
-                export PATH=$PATH:usr/lib/chromium-browser/
-                cd $(Pipeline.Workspace)/drop-selenium
-                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
-          - task: PythonScript@0
+                sudo rm -rf chromedriver*
+                wget https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip
+                unzip chromedriver*.zip
+                sudo mv chromedriver -f /usr/bin
+#                sudo apt-get upgrade -y
+#                sudo apt-get install python3-pip -y
+#                sudo apt-get install unzip -y
+#                sudo apt-get install -y chromium-browser
+#                sudo apt-get install -y chromium-chromedriver
+#                pip3 install selenium
+#                export PATH=$PATH:usr/lib/chromium-browser/
+#                cd $(Pipeline.Workspace)/drop-selenium
+#                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
+
+          - task: Bash@3
             displayName: Run Selenium script
             inputs:
-              scriptPath: '$(Pipeline.Workspace)/drop-selenium/login.py'
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                sudo mkdir /home/demo/selenium_log
+                export PATH=$PATH:/usr/bin/chromedriver
+                python3 ../drop-seleniumtests/login.py >> /home/demo/selenium_log/selenium-report.txt
+                sudo cp selenium-report.txt /var/log/selenium-report.txt
 
 - stage: Test
   jobs:
