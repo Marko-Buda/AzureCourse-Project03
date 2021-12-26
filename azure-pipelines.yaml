@@ -143,7 +143,7 @@ stages:
                 sudo apt-get install -y chromium-chromedriver
                 pip3 install selenium
 #                sudo mv chromedriver -f /usr/bin
-#                wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+#                wget https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip
 #                sudo apt-get install python3-pip unzip expect -y
 #                sudo apt-get upgrade -y
 #                sudo apt-get install python3-pip -y
@@ -162,7 +162,7 @@ stages:
               script: |
                 #! /bin/bash
                 sudo mkdir /home/demo/selenium_log
-                python $(Pipeline.Workspace)/drop-seleniumtests/login.py 
+                python3 $(Pipeline.Workspace)/drop-seleniumtests/login.py 
                 cp selenium-report.txt /home/demo/selenium_log/selenium-report.txt
                 sudo cp selenium-report.txt /var/log/selenium-report.txt
 
