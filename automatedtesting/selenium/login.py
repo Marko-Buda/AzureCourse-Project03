@@ -9,7 +9,7 @@ import sys
 def login (user, password):
     logging.basicConfig(filename="selenium-report.txt",
                         format="%(asctime)-4s %(message)s",
-                        stream=sys.stdout,
+#                        stream=sys.stdout,
                         filemode="w",
                         level=logging.INFO)
     shopping_list = [
@@ -25,9 +25,9 @@ def login (user, password):
     options = ChromeOptions()
     options.add_argument("--no-sandbox")
     options.add_argument("--headless")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--remote-debugging-port=9222")
-    driver = webdriver.Chrome('/usr/local/bin/chromedriver', options=options)
+    #options.add_argument("--disable-dev-shm-usage")
+    #options.add_argument("--remote-debugging-port=9222")
+    driver = webdriver.Chrome('/usr/bin/chromedriver', options=options)
     #driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 
     logging.info('Browser started successfully. Navigating to the demo page to login.')
