@@ -35,57 +35,57 @@ stages:
     #    sshPublicKey: 'PUBLIC_KEY'
     #    sshKeySecureFile: 'id_rsa'
     #Terraform init, plan, validate, apply commands
-#    - task: TerraformCLI@0
-#      displayName: 'Initialize Terraform'
-#      inputs:
-#        command: init
-#        workingDirectory: terraform/environments/test
-#        backendType: selfConfigured
-#    - task:  TerraformCLI@0
-#      displayName: 'Plan Terraform'
-#      inputs:
-#        command: 'plan'
-#        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#        environmentServiceName: 'last_project'
-#    - task: TerraformCLI@0
-#      displayName: 'Apply Terraform'
-#      inputs:
-#        command: 'apply'
-#        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#        environmentServiceName: 'last_project'
+    - task: TerraformCLI@0
+      displayName: 'Initialize Terraform'
+      inputs:
+        command: init
+        workingDirectory: terraform/environments/test
+        backendType: selfConfigured
+    - task:  TerraformCLI@0
+      displayName: 'Plan Terraform'
+      inputs:
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceName: 'last_project'
+    - task: TerraformCLI@0
+      displayName: 'Apply Terraform'
+      inputs:
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceName: 'last_project'
 
-#    - task: Bash@3
-#      displayName: Install Newman and JUnit reporter
-#      inputs:
-#        targetType: 'inline'
-#        script: |
-#          #! /bin/bash
-#          sudo apt-get upgrade -y
-#          sudo npm install -g newman -y
-#          sudo npm install -g newman-reporter-junitfull -y
+    - task: Bash@3
+      displayName: Install Newman and JUnit reporter
+      inputs:
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          sudo apt-get upgrade -y
+          sudo npm install -g newman -y
+          sudo npm install -g newman-reporter-junitfull -y
 
-#    - task: CmdLine@2
-#      displayName: Run Regression Tests
-#      continueOnError: true
-#      inputs:
-#        script: 'newman run Starter_APIs_Regression_Tests.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-regression-test-data.xml'
-#        workingDirectory: 'automatedtesting/postman'
+    - task: CmdLine@2
+      displayName: Run Regression Tests
+      continueOnError: true
+      inputs:
+        script: 'newman run Starter_APIs_Regression_Tests.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull --reporter-junitfull-export JUnitReport-regression-test-data.xml'
+        workingDirectory: 'automatedtesting/postman'
 
-#    - task: CmdLine@2
-#      displayName: Run Data Validation Tests
-#      continueOnError: true
-#      inputs:
-#        script: 'newman run Starter_APIs_Data_Validation.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull -x --reporter-junitfull-export JUnitReport-data-validation.xml'
-#        workingDirectory: 'automatedtesting/postman'
+    - task: CmdLine@2
+      displayName: Run Data Validation Tests
+      continueOnError: true
+      inputs:
+        script: 'newman run Starter_APIs_Data_Validation.postman_collection.json -e ProjectEnv.postman_environment.json -r cli,junitfull -x --reporter-junitfull-export JUnitReport-data-validation.xml'
+        workingDirectory: 'automatedtesting/postman'
 
-#    - task: PublishTestResults@2
-#      displayName: 'Publish integrations test'
-#      inputs:
-#        testResultsFormat: 'JUnit'
-#        testResultsFiles: '**/JUnitReport*.xml'
-#        searchFolder: 'automatedtesting/postman'
-#        mergeTestResults: true
-#        testRunTitle: 'Publish postman test result'
+    - task: PublishTestResults@2
+      displayName: 'Publish integrations test'
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/JUnitReport*.xml'
+        searchFolder: 'automatedtesting/postman'
+        mergeTestResults: true
+        testRunTitle: 'Publish postman test result'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
@@ -138,10 +138,10 @@ stages:
                 #! /bin/bash
                 sudo apt-get update
                 sudo apt-get upgrade -y
-                sudo apt-get install python-pip -y
+                sudo apt-get install python3-pip unzip expect -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
-                LC_ALL=C pip install selenium
+                pip3 install selenium
 #                sudo mv chromedriver -f /usr/bin
 #                wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
 #                sudo apt-get install python3-pip unzip expect -y
