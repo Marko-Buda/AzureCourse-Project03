@@ -1,0 +1,93 @@
+# AzureCourse-Project03: Ensuring Quality Releases
+
+## Introduction
+
+The main focus of this project was to create disposable test environments and run a variety of automated tests with the usage of Azure DevOps Pipelines. It is neccessary to monitor and provide insight into our application's behavior, and also determine root causes by querying the application’s custom log files. This is done by using Azure Log Analytics and Azure Monitor
+A mocked REST API is deployed to Azure App Services. All the automated test execution happens mainly by using the CI/CD pipeline in Azure Pipelines.
+Three major types of tests are performed:
+
+1. Postman - Integration tests
+2. Selenium - Functional UI tests
+3. JMeter - Performance (load) tests
+
+The remainder of this document presents screenshots with relevant headers which cover all the topics and tools used to complete this project.
+## Environment Creation & Deployment
+
+### Terraform
+
+Terraform init
+![](./screenshots/terraform_init.jpg)
+
+
+Terraform plan
+![](./screenshots/terraform_plan.jpg)
+
+
+Terraform apply
+![](./screenshots/terraform_apply.jpg)
+
+### Azure Pipelines
+
+Pipeline overview
+![](./screenshots/pipeline_summary.jpg_)
+
+Pipeline build
+![](./screenshots/pipeline_build.jpg)
+
+
+## Automated Testing
+
+### Integration tests
+
+Postman Run Summary
+![](./screenshots/postman_tests_run_summary.jpg)
+
+Postman Test Results
+![](./screenshots/postman_tests_results.jpg)
+
+Postman Publish Test Results
+![](./screenshots/postman_publish_tests.jpg)
+
+**NOTE**: The reasons why 4 tests fail are the following: server for testing is read-only (the data that was written with POST is not stored in webserver - it only returns succesfull response with the body) and the server in general is unstable (it cannot handle multiple requests in sequential order which causes it to return 429 error).
+Links on Knowledge which confirm these statements [link_1](https://knowledge.udacity.com/questions/398515) and [link_2](https://knowledge.udacity.com/questions/636454).
+
+In regression tests I handled this by expecting either 200 or 429 responses. In data validation I could not as I'm expecting body data to be returned and its value checked. This is why put the -x option for Data Validation tests in [Azure pipelines yaml file](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/azure-pipelines.yaml#L78).
+
+### Selenium - Functional UI tests
+
+![](./screenshots/selenium_ui_tests.jpg)
+
+### JMeter - Performance (load) tests
+
+JMeter endurance tests
+![](./screenshots/jmeter_endurance_tests.jpg)
+
+JMeter stress tests
+![](./screenshots/jmeter_stress_tests.jpg)
+
+JMeter HTML report
+![](./screenshots/jmeter_HTML_results_page.jpg)
+
+## Monitoring and Observability
+
+### Azure Monitor
+
+E-mail for HTTP 200 status response
+![](./screenshots/email_alert.jpg)
+
+Alert chart for HTTP 200 status response
+![](./screenshots/monitor_alert_chart.jpg)
+
+Alerts monitor
+![](./screenshots/monitor_alert.jpg)
+
+### Azure Log Analytics
+
+Log for user login
+![](./screenshots/log_analytics_user_login.jpg)
+
+Log for products added
+![](./screenshots/log_analytics_products_added.jpg)
+
+Log for products removed
+![](./screenshots/log_analytics_products_removed.jpg)
