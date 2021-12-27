@@ -16,23 +16,24 @@ The remainder of this document presents screenshots with relevant headers which 
 ### Terraform
 
 Terraform init
-![](./screenshots/terraform_init.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/terraform_init.JPG)
 
 
 Terraform plan
-![](./screenshots/terraform_plan.jpg)
+
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/terraform_plan.JPG)
 
 
 Terraform apply
-![](./screenshots/terraform_apply.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/terraform_apply.JPG)
 
 ### Azure Pipelines
 
 Pipeline overview
-![](./screenshots/pipeline_summary.jpg_)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/pipeline_summary.JPG)
 
 Pipeline build
-![](./screenshots/pipeline_build.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/pipeline_build.JPG)
 
 
 ## Automated Testing
@@ -40,13 +41,13 @@ Pipeline build
 ### Integration tests
 
 Postman Run Summary
-![](./screenshots/postman_tests_run_summary.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/postman_tests_run_summary.JPG)
 
 Postman Test Results
-![](./screenshots/postman_tests_results.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/postman_tests_results.JPG)
 
 Postman Publish Test Results
-![](./screenshots/postman_publish_tests.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/postman_publish_tests.JPG)
 
 **NOTE**: The reasons why 4 tests fail are the following: server for testing is read-only (the data that was written with POST is not stored in webserver - it only returns succesfull response with the body) and the server in general is unstable (it cannot handle multiple requests in sequential order which causes it to return 429 error).
 Links on Knowledge which confirm these statements [link_1](https://knowledge.udacity.com/questions/398515) and [link_2](https://knowledge.udacity.com/questions/636454).
@@ -55,39 +56,39 @@ In regression tests I handled this by expecting either 200 or 429 responses. In 
 
 ### Selenium - Functional UI tests
 
-![](./screenshots/selenium_ui_tests.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/selenium_ui_tests.JPG)
 
 ### JMeter - Performance (load) tests
 
 JMeter endurance tests
-![](./screenshots/jmeter_endurance_tests.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_endurance_tests.JPG)
 
 JMeter stress tests
-![](./screenshots/jmeter_stress_tests.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_stress_tests.JPG)
 
 JMeter HTML report
-![](./screenshots/jmeter_HTML_results_page.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_HTML_results_page.JPG)
 
 ## Monitoring and Observability
 
 ### Azure Monitor
 
 E-mail for HTTP 200 status response
-![](./screenshots/email_alert.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/email_alert.JPG)
 
 Alert chart for HTTP 200 status response
-![](./screenshots/monitor_alert_chart.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/monitor_alert_chart.JPG)
 
 Alerts monitor
-![](./screenshots/monitor_alert.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/monitor_alert.JPG)
 
 ### Azure Log Analytics
 
 Log for user login
-![](./screenshots/log_analytics_user_login.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/log_analytics_user_login.JPG)
 
 Log for products added
-![](./screenshots/log_analytics_products_added.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/log_analytics_products_added.JPG)
 
 Log for products removed
-![](./screenshots/log_analytics_products_removed.jpg)
+![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/log_analytics_products_removed.JPG)
