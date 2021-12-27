@@ -148,9 +148,7 @@ stages:
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                sudo mkdir /home/demo/selenium_log
                 python3 $(Pipeline.Workspace)/drop-seleniumtests/login.py 
-                cp selenium-report.txt /home/demo/selenium_log/selenium-report.txt
                 sudo cp selenium-report.txt /var/log/selenium-report.txt
 
 - stage: Test
