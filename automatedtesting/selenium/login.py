@@ -21,6 +21,7 @@ def custom_logging_creation():
     logFormatter = logging.Formatter(fmt="%(asctime)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
     fileHandler = logging.FileHandler(
         filename="selenium-report.txt",
+        encoding="utf-8"
     )
     fileHandler.setFormatter(logFormatter)
 
