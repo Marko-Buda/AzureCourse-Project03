@@ -172,7 +172,7 @@ stages:
           displayName: 'Publish Endurance Test Results'
           inputs:
             ArtifactName: 'endurance-test-report'
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-test-report'
+            PathtoPublish: '$(Build.SourcesDirectory)/endurance-test-report'
         - task: Bash@3
           displayName: 'Run JMeter Stress tests'
           inputs:
@@ -183,4 +183,4 @@ stages:
           displayName: 'Publish Endurance Test Results'
           inputs:
             ArtifactName: 'stress-test-report'
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-test-report/stress-test-report'
+            PathtoPublish: '$(Build.SourcesDirectory)/stress-test-report'
