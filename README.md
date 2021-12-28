@@ -66,6 +66,8 @@ JMeter endurance tests
 JMeter stress tests
 ![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_stress_tests.JPG)
 
+**NOTE**: Due to my azure account being hacked by a hacker who set up an automatic deployment of resources groups with active VMs on all avaiable azure server locations I have now close to 1 000 euros of costs to pay ([link](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/hacker_issue.JPG)). I have raised the ticket with Microsoft and they are currently investigating it. Because of these reasons I am not willing to execute jmeter tests on "30 users for a max duration of 60 seconds" as this will surely increase my costs. I have instead used 2 users on the period of 60 seconds of test execution. With this I was able to trigger the alert via e-mail ([link](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/email_alert.JPG)).
+
 ## Monitoring and Observability
 
 ### Azure Monitor
