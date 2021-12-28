@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The main focus of this project was to create disposable test environments and run a variety of automated tests with the usage of Azure DevOps Pipelines. It is neccessary to monitor and provide insight into our application's behavior, and also determine root causes by querying the application’s custom log files. This is done by using Azure Log Analytics and Azure Monitor
+The main focus of this project was to create disposable test environments and run a variety of automated tests with the usage of Azure DevOps Pipelines. It is neccessary to monitor our application's behavior, and also determine root causes by querying the application’s custom log files. This is done by using Azure Log Analytics and Azure Monitor.
 A mocked REST API is deployed to Azure App Services. All the automated test execution happens mainly by using the CI/CD pipeline in Azure Pipelines.
 Three major types of tests are performed:
 
@@ -10,7 +10,7 @@ Three major types of tests are performed:
 2. Selenium - Functional UI tests
 3. JMeter - Performance (load) tests
 
-The remainder of this document presents screenshots with relevant headers which cover all the topics and tools used to complete this project.
+The remainder of this document presents screenshots with relevant headers which cover all the requirements and tools used to complete this project.
 ## Environment Creation & Deployment
 
 ### Terraform
@@ -38,7 +38,7 @@ Pipeline build
 
 ## Automated Testing
 
-### Integration tests
+### Postman - Integration tests
 
 Postman Run Summary
 ![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/postman_tests_run_summary.JPG)
@@ -49,7 +49,7 @@ Postman Test Results
 Postman Publish Test Results
 ![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/postman_publish_tests.JPG)
 
-**NOTE**: The reasons why 4 tests fail are the following: server for testing is read-only (the data that was written with POST is not stored in webserver - it only returns succesfull response with the body) and the server in general is unstable (it cannot handle multiple requests in sequential order which causes it to return 429 error).
+**NOTE**: Server for testing is read-only (the data that was written with POST is not stored in webserver - it only returns succesfull response with the body) and the server in general is unstable (it cannot handle multiple requests in sequential order which causes it to return 429 error).
 Links on Knowledge which confirm these statements [link_1](https://knowledge.udacity.com/questions/398515) and [link_2](https://knowledge.udacity.com/questions/636454).
 
 In regression tests I handled this by expecting either 200 or 429 responses. In data validation I could not as I'm expecting body data to be returned and its value checked. This is why put the -x option for Data Validation tests in [Azure pipelines yaml file](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/azure-pipelines.yaml#L78).
@@ -65,9 +65,6 @@ JMeter endurance tests
 
 JMeter stress tests
 ![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_stress_tests.JPG)
-
-JMeter HTML report
-![](https://github.com/Marko-Buda/AzureCourse-Project03/blob/master/screenshots/jmeter_HTML_results_page.JPG)
 
 ## Monitoring and Observability
 
